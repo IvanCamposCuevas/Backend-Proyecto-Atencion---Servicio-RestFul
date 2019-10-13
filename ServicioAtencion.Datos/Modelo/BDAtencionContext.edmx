@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="et_dej4501Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="atencion">
+          <Key>
+            <PropertyRef Name="nro_atencion" />
+          </Key>
+          <Property Name="nro_atencion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rut" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_servicio" Type="int" Nullable="false" />
+          <Property Name="nro_modulo" Type="int" Nullable="false" />
+          <Property Name="es_cliente" Type="smallint" Nullable="false" />
+          <Property Name="tiempo_espera" Type="int" Nullable="false" />
+          <Property Name="comentario" Type="varchar" MaxLength="250" />
+          <Property Name="fecha_creacion" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="rut" />
+          </Key>
+          <Property Name="rut" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="modulo">
+          <Key>
+            <PropertyRef Name="nro_modulo" />
+          </Key>
+          <Property Name="nro_modulo" Type="int" Nullable="false" />
+          <Property Name="carga_actual" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="servicio">
+          <Key>
+            <PropertyRef Name="id_servicio" />
+          </Key>
+          <Property Name="id_servicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="solicitar_comentario" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_atencion_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+          <End Role="atencion" Type="Self.atencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="rut" />
+            </Principal>
+            <Dependent Role="atencion">
+              <PropertyRef Name="rut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_atencion_modulo1">
+          <End Role="modulo" Type="Self.modulo" Multiplicity="1" />
+          <End Role="atencion" Type="Self.atencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modulo">
+              <PropertyRef Name="nro_modulo" />
+            </Principal>
+            <Dependent Role="atencion">
+              <PropertyRef Name="nro_modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_atencion_servicio1">
+          <End Role="servicio" Type="Self.servicio" Multiplicity="1" />
+          <End Role="atencion" Type="Self.atencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servicio">
+              <PropertyRef Name="id_servicio" />
+            </Principal>
+            <Dependent Role="atencion">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="et_dej4501ModelStoreContainer">
+          <EntitySet Name="atencion" EntityType="Self.atencion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modulo" EntityType="Self.modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="servicio" EntityType="Self.servicio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_atencion_cliente" Association="Self.fk_atencion_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="atencion" EntitySet="atencion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_atencion_modulo1" Association="Self.fk_atencion_modulo1">
+            <End Role="modulo" EntitySet="modulo" />
+            <End Role="atencion" EntitySet="atencion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_atencion_servicio1" Association="Self.fk_atencion_servicio1">
+            <End Role="servicio" EntitySet="servicio" />
+            <End Role="atencion" EntitySet="atencion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="et_dej4501Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="atencion">
+          <Key>
+            <PropertyRef Name="nro_atencion" />
+          </Key>
+          <Property Name="nro_atencion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_servicio" Type="Int32" Nullable="false" />
+          <Property Name="nro_modulo" Type="Int32" Nullable="false" />
+          <Property Name="es_cliente" Type="Int16" Nullable="false" />
+          <Property Name="tiempo_espera" Type="Int32" Nullable="false" />
+          <Property Name="comentario" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="cliente" Relationship="Self.fk_atencion_cliente" FromRole="atencion" ToRole="cliente" />
+          <NavigationProperty Name="modulo" Relationship="Self.fk_atencion_modulo1" FromRole="atencion" ToRole="modulo" />
+          <NavigationProperty Name="servicio" Relationship="Self.fk_atencion_servicio1" FromRole="atencion" ToRole="servicio" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="rut" />
+          </Key>
+          <Property Name="rut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="atencion" Relationship="Self.fk_atencion_cliente" FromRole="cliente" ToRole="atencion" />
+        </EntityType>
+        <EntityType Name="modulo">
+          <Key>
+            <PropertyRef Name="nro_modulo" />
+          </Key>
+          <Property Name="nro_modulo" Type="Int32" Nullable="false" />
+          <Property Name="carga_actual" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="atencion" Relationship="Self.fk_atencion_modulo1" FromRole="modulo" ToRole="atencion" />
+        </EntityType>
+        <EntityType Name="servicio">
+          <Key>
+            <PropertyRef Name="id_servicio" />
+          </Key>
+          <Property Name="id_servicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="solicitar_comentario" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="atencion" Relationship="Self.fk_atencion_servicio1" FromRole="servicio" ToRole="atencion" />
+        </EntityType>
+        <Association Name="fk_atencion_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+          <End Role="atencion" Type="Self.atencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="rut" />
+            </Principal>
+            <Dependent Role="atencion">
+              <PropertyRef Name="rut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_atencion_modulo1">
+          <End Role="modulo" Type="Self.modulo" Multiplicity="1" />
+          <End Role="atencion" Type="Self.atencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modulo">
+              <PropertyRef Name="nro_modulo" />
+            </Principal>
+            <Dependent Role="atencion">
+              <PropertyRef Name="nro_modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_atencion_servicio1">
+          <End Role="servicio" Type="Self.servicio" Multiplicity="1" />
+          <End Role="atencion" Type="Self.atencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servicio">
+              <PropertyRef Name="id_servicio" />
+            </Principal>
+            <Dependent Role="atencion">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDAtencionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="atencion" EntityType="Self.atencion" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" />
+          <EntitySet Name="modulo" EntityType="Self.modulo" />
+          <EntitySet Name="servicio" EntityType="Self.servicio" />
+          <AssociationSet Name="fk_atencion_cliente" Association="Self.fk_atencion_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="atencion" EntitySet="atencion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_atencion_modulo1" Association="Self.fk_atencion_modulo1">
+            <End Role="modulo" EntitySet="modulo" />
+            <End Role="atencion" EntitySet="atencion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_atencion_servicio1" Association="Self.fk_atencion_servicio1">
+            <End Role="servicio" EntitySet="servicio" />
+            <End Role="atencion" EntitySet="atencion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="et_dej4501ModelStoreContainer" CdmEntityContainer="BDAtencionEntities">
+          <EntitySetMapping Name="atencion">
+            <EntityTypeMapping TypeName="et_dej4501Model.atencion">
+              <MappingFragment StoreEntitySet="atencion">
+                <ScalarProperty Name="nro_atencion" ColumnName="nro_atencion" />
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+                <ScalarProperty Name="nro_modulo" ColumnName="nro_modulo" />
+                <ScalarProperty Name="es_cliente" ColumnName="es_cliente" />
+                <ScalarProperty Name="tiempo_espera" ColumnName="tiempo_espera" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="et_dej4501Model.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modulo">
+            <EntityTypeMapping TypeName="et_dej4501Model.modulo">
+              <MappingFragment StoreEntitySet="modulo">
+                <ScalarProperty Name="nro_modulo" ColumnName="nro_modulo" />
+                <ScalarProperty Name="carga_actual" ColumnName="carga_actual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servicio">
+            <EntityTypeMapping TypeName="et_dej4501Model.servicio">
+              <MappingFragment StoreEntitySet="servicio">
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="solicitar_comentario" ColumnName="solicitar_comentario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
