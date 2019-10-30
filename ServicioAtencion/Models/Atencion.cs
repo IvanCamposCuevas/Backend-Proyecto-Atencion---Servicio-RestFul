@@ -25,5 +25,10 @@ namespace ServicioAtencion.Models
             Comentario = (comentario != null && comentario != "") ? comentario : null;
             EsCliente = esCliente;
         }
+
+        public Atencion()
+        {
+
+        }
     }
 }
