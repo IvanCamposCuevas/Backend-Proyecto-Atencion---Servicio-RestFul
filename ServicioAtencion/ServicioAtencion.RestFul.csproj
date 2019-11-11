@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Script\BDExamenDej.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
