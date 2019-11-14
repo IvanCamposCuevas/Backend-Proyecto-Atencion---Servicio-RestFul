@@ -17,7 +17,7 @@ namespace ServicioAtencion.Controllers
         /// <param name="rut"></param>
         /// <returns></returns>
         [HttpGet]
-        public List<Numero> getAtencionPorRut(string rut)
+        public HttpResponseMessage getAtencionPorRut(string rut)
         {
             List<Numero> consultaNumeros = new List<Numero>();
             using (BDAtencionEntities bd = new BDAtencionEntities())
@@ -31,7 +31,7 @@ namespace ServicioAtencion.Controllers
                                        Servicio = y.descripcion
                                    }).ToList();
             }
-            return consultaNumeros;
+            return Request.CreateResponse(HttpStatusCode.OK, consultaNumeros);
         }
 
         /// <summary>
@@ -40,28 +40,25 @@ namespace ServicioAtencion.Controllers
         /// <param name="nroAtencion"></param>
         /// <returns></returns>
         [HttpDelete]
-        public bool deleteNumeroAtencion(int nroAtencion)
+        public HttpResponseMessage deleteNumeroAtencion(int nroAtencion)
         {
             try
             {
-                bool resultado;
                 using (BDAtencionEntities bd = new BDAtencionEntities())
                 {
                     var atencion = bd.atencion.Where(x => x.nro_atencion == nroAtencion).FirstOrDefault();
                     bd.atencion.Remove(atencion);
-                    resultado = (bd.SaveChanges() > 0) ? true : false;
-
+                    bd.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
                 }
-                return resultado;
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "El numero solicitado no se encuentra en la BD", ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
     }

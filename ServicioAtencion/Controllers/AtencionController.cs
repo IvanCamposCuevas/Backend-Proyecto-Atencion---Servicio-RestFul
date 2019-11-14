@@ -90,9 +90,9 @@ namespace ServicioAtencion.Controllers
                                       }).First();
                         }
                     }
-                    catch (ArgumentNullException ex)
+                    catch (InvalidOperationException ex)
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No existen modulos en la BD", ex);
                     }
                     atEntidad.nro_modulo = modulo.nro_modulo;
                     atEntidad.tiempo_espera = modulo.carga_actual * 5;
